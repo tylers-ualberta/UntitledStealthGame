@@ -10,23 +10,23 @@ Level: 0
 Description: Tutorial level
 
 """
-# offset indicates player spawn point
-offset = [50, 50]
-# Set enemy spawn DELETE
-offset2 = [100, 100]
 
 # Main function that runs
 def run():
     pygame.init()
 
-    # Initializing players and enemies
-    player = engine.Player(offset)
-    enemy = engine.Enemy(offset2)
-
-
     screen = pygame.display.set_mode([1260, 700], RESIZABLE|HWSURFACE|DOUBLEBUF)
     running = True
 
+    # Entity spawn conditions
+    # offset indicates player spawn point
+    offset = [30, screen.get_height()-180]
+    # Set enemy spawn
+    e_spawn1 = [3*screen.get_width()/4+20, screen.get_height()/2-10]
+
+    # Initializing players and enemies
+    player = engine.Player(offset)
+    enemy = engine.Enemy(e_spawn1)
 
     clock = pygame.time.Clock()
     while running:
@@ -59,9 +59,9 @@ def run():
         pygame.draw.rect(screen, (0, 0, 0), ((0, screen.get_height()/2-100), (3*screen.get_width()/4, 200)))
 
         player.update_position()
-        # DELETE, replace with player.image
+        # DELETE, replace with player.image, keep in classes
         screen.blit(player.surf, player.rect)
-        # DELETE, replace with enemy.image
+        # DELETE, replace with enemy.image, keep in classes
         screen.blit(enemy.surf, enemy.rect)
 
         # Keep at bottom for display reasons

@@ -1,6 +1,7 @@
 import pygame
 import sys
 import Level_0
+import Level_1
 
 from pygame.locals import *
 pygame.init()
@@ -72,7 +73,8 @@ while Instructions:
 
 
 
-Level_0.run()
-
+cont = Level_0.run()
+if cont:
+    Level_1.run()
 pygame.quit()
 

@@ -136,6 +136,7 @@ def run():
         # Flag collision
         if pygame.sprite.collide_rect(player, endflag):
             running = False
+            end = True
 
         # Vision cone collision
         for cone in cone_sprites:

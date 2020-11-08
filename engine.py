@@ -11,7 +11,7 @@ class Player(pygame.sprite.Sprite):
             self.rect = self.surf.get_rect()
             self.rect.move_ip(offset)
         else:
-            self.rect = (offset[0], offset[1], 20, 40)
+            self.rect = pygame.Rect(offset[0], offset[1], 20, 40)
             self.image = pygame.image.load(sprite)
 
     def update_position(self):
@@ -38,12 +38,16 @@ class Player(pygame.sprite.Sprite):
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, offset, speed=0, colour=(255, 255, 0), sprite=""):
         super(Enemy, self).__init__()
-        self.surf = pygame.Surface((20,20))
-        self.surf.fill(colour)
-        self.rect = self.surf.get_rect()
-        self.offset = offset
+        if sprite == "":
+            self.surf = pygame.Surface((20,20))
+            self.surf.fill(colour)
+            self.rect = self.surf.get_rect()
+            self.rect.move_ip(offset)
+        else:
+            self.rect = pygame.Rect(offset[0], offset[1], 20, 40)
+            self.image = pygame.image.load(sprite)
+
         self.speed = speed
-        self.rect.move_ip(offset)
 
     def resize(self, dWidth, dHeight):
         self.rect.move_ip(-dWidth, -dHeight)
@@ -86,6 +90,38 @@ class Walls(pygame.sprite.Sprite):
         screen.blit(self.surf, self.rect)
         return
 
+class Cone(Enemy):
+    def __init__(self, offset, orientation="left", speed=0, colour=(255, 255, 0)):
+        super().__init__(offset, speed=0, colour=(255, 255, 0))
+        self.image = pygame.image.load("Assets/Cone.png").convert()
+        self.orient(offset, orientation)
+        self.image = pygame.transform.scale2x(self.image)
+        self.image.set_colorkey((255, 255, 255), RLEACCEL)
+
+
+        # Change self.rect to be hitbox DELETE
+        self.rect = self.surf.get_rect()
+        self.offset = offset
+        self.speed = speed
+        self.rect.move_ip(offset)
+
+    def resize(self, dWidth, dHeight):
+        self.rect.move_ip(-dWidth, -dHeight)
+        return
+
+    def draw(self):
+        screen.blit(self.surf, self.rect)
+        pass
+
+    def orient(self, offset, orientation):
+        # Adjust offset to be centered on enemy
+        if orientation == "left":
+            offset[0] -= 160
+            offset[1] -= 40
+        elif orientation == "right":
+            offset[0] += 20 # Actual width of enemy
+            offset[1] -= 40 # Twice the size
+            self.image = pygame.transform.rotate(self.image, 180)
 
 def main():
     width, height = 1260, 700

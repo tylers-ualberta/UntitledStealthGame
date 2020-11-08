@@ -47,7 +47,10 @@ def run():
 
         # Walls
         # pygame.draw.rect(screen, colour, (top-left, (width,height))
-        # pygame.draw.rect(screen, (0, 255, 0), ((0, 10), (screen.get_width(), 10)))
+        pygame.draw.rect(screen, (0, 0, 0), ((0, 10), (screen.get_width(), 100)))
+        pygame.draw.rect(screen, (0, 0, 0), ((screen.get_width()-100, 0), (100, screen.get_height())))
+        pygame.draw.rect(screen, (0, 0, 0), ((0, screen.get_height()-100), (screen.get_width(), 100)))
+        pygame.draw.rect(screen, (0, 0, 0), ((0, screen.get_height()/2-100), (3*screen.get_width()/4, 200)))
 
 
         player.update_position()

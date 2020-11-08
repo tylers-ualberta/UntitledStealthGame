@@ -17,6 +17,7 @@ class Player(pygame.sprite.Sprite):
             self.image = pygame.image.load(sprite)
             self.surfFlag = False
             self.AnimationCount = 0
+        return
 
     def update_position(self):
         if self.surfFlag:
@@ -83,7 +84,7 @@ class Enemy(pygame.sprite.Sprite):
     def __init__(self, offset, colour=(255, 255, 0), sprite=""):
         super(Enemy, self).__init__()
         if sprite == "":
-            self.surf = pygame.Surface((20,20))
+            self.surf = pygame.Surface((0,0))
             self.surf.fill(colour)
             self.rect = self.surf.get_rect()
             self.rect.move_ip(offset)
@@ -186,11 +187,11 @@ class Item(pygame.sprite.Sprite):
         else:
             self.rect = pygame.Rect(offset[0], offset[1], 25, 40)
             self.image = pygame.image.load(sprite)
-        pass
+        return
     
     def draw(self, screen):
         screen.blit(self.surf, self.rect)
-        pass
+        return
 
 
 class Walls(pygame.sprite.Sprite):
@@ -206,17 +207,19 @@ class Walls(pygame.sprite.Sprite):
         screen.blit(self.surf, self.rect)
         return
 
+
 class Cone(Enemy):
-    def __init__(self, offset, orientation="left", colour=(255, 255, 0)):
-        super().__init__(offset, colour=(255, 255, 0))
-        self.image = pygame.image.load("Assets/Cone.png").convert()
+    def __init__(self, offset, orientation="left", speed=0, colour=(255, 255, 0)):
+        super().__init__(offset, colour=(255, 0, 0))
+        self.image = pygame.image.load(r"stuartbranch/Cone.png")
         self.orient(offset, orientation)
         self.image = pygame.transform.scale2x(self.image)
         self.image.set_colorkey((255, 255, 255), RLEACCEL)
         # Change self.rect to be hitbox DELETE
-        self.rect = self.surf.get_rect()
+        self.rect = [pygame.Rect(offset[0], offset[1], 0, 0), pygame.Rect(offset[0], offset[1] + 9, 32, 80),
+                    pygame.Rect(offset[0] + 32, offset[1] + 18, 32, 60), pygame.Rect(offset[0] + 64, offset[1] + 27, 32, 40), 
+                    pygame.Rect(offset[0] + 96, offset[1] + 36, 32, 20), pygame.Rect(offset[0] + 112, offset[1] + 42, 16, 10)]
         self.offset = offset
-        self.rect.move_ip(offset)
 
     def draw(self, screen):
         screen.blit(self.surf, self.rect)
@@ -240,6 +243,7 @@ class Cone(Enemy):
             self.offset[1] -= 160
             self.image = pygame.transform.rotate(self.image, 270)
         return
+
 
 def main():
     width, height = 1260, 700

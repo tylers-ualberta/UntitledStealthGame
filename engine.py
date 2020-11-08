@@ -41,12 +41,22 @@ class Player(pygame.sprite.Sprite):
         self.rect.move_ip(-dWidth, -dHeight)
         return
 
-
-class Enemy(Characters):
-    def __init__(self, offset):
+class Enemy(pygame.sprite.Sprite):
+    def __init__(self, offset, speed=0, colour=(255, 255, 0)):
+        super(Enemy, self).__init__()
+        self.surf = pygame.Surface((20,20))
+        self.surf.fill(colour)
+        self.rect = self.surf.get_rect()
         self.offset = offset
-        self.location = (screen.get_width()-self.offset[0], screen.get_height()-self.offset[0])
+        self.speed = speed
+        # For enemy movement DELETE
+        # self.rect.move_ip(offset)
 
+    def resize(self, wid, hei):
+        self.rect.move_ip()
+
+    def draw(self):
+        pass
 
 class Item(Characters):
     def __init__(self, offset):

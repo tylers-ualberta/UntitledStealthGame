@@ -59,16 +59,16 @@ def run():
 
         # Walls(corner(list), width, height, colour=(0,0,0))
         wall1 = Walls([0, 10], screen.get_width(), 100)
-        wall2 = Walls([screen.get_width() - 100, 0], 100, screen.get_height())
+        wall2 = Walls([screen.get_width() - 115, 0], 115, screen.get_height())
         wall3 = Walls([0, screen.get_height()-100], screen.get_width(), 100)
-        wall4 = Walls([0, screen.get_height()/2-100], 3*screen.get_width()/4, 200)
+        wall4 = Walls([0, screen.get_height()/2-100], 3*screen.get_width()/4+10, 200)
 
         player.update_position()
 
         # Calculates time
         time = (pygame.time.get_ticks() - start_ticks) / 1000 #calculate how many seconds
         # Change view cone
-        if time > 1:
+        if time > 2:
             cone_state += 1
             start_ticks = pygame.time.get_ticks()
         

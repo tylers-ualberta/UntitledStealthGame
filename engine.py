@@ -2,24 +2,17 @@ import pygame
 from pygame.locals import *
 pygame.init()
 
-screen = pygame.display.set_mode([1260, 700], RESIZABLE|HWSURFACE|DOUBLEBUF)
-
-class Characters():
-    def get_location(self):
-        return(self.location)
-    
-    def resize(self):
-        self.location = (screen.get_width()-self.offset[0], screen.get_height()-self.offset[1])
-        return
-
-
 class Player(pygame.sprite.Sprite):
-    def __init__(self, offset):
+    def __init__(self, offset, sprite=""):
         super(Player, self).__init__()
-        self.surf = pygame.Surface((20, 20))
-        self.surf.fill((0, 0, 255))
-        self.rect = self.surf.get_rect()
-        self.rect.move_ip(offset)
+        if sprite == "":
+            self.surf = pygame.Surface((20, 20))
+            self.surf.fill((0, 0, 255))
+            self.rect = self.surf.get_rect()
+            self.rect.move_ip(offset)
+        else:
+            self.rect = (offset[0], offset[1], 20, 40)
+            self.image = pygame.image.load(sprite)
 
     def update_position(self):
         keys = pygame.key.get_pressed()  # Get pressed idea: https://stackoverflow.com/questions/9961563/how-can-i-make-a-sprite-move-when-key-is-held-down
@@ -43,7 +36,7 @@ class Player(pygame.sprite.Sprite):
 
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, offset, speed=0, colour=(255, 255, 0)):
+    def __init__(self, offset, speed=0, colour=(255, 255, 0), sprite=""):
         super(Enemy, self).__init__()
         self.surf = pygame.Surface((20,20))
         self.surf.fill(colour)
@@ -61,21 +54,49 @@ class Enemy(pygame.sprite.Sprite):
         pass
 
 
-class Item(Characters):
-    def __init__(self, offset):
+class Item(pygame.sprite.Sprite):
+    def __init__(self, offset, colour=(255, 0, 0), sprite=""):
+        super(Item, self).__init__()
+        self.surf = pygame.Surface((5, 5))
+        self.surf.fill(colour)
+        self.rect = self.surf.get_rect()
+        self.offset = offset
+        self.rect.move_ip(offset)
+        pass
+    
+    def resize(self, dWidth, dHeight):
+        self.rect.move_ip(-dWidth, -dHeight)
+        return
+    
+    def draw(self):
+        screen.blit(self.surf, self.rect)
         pass
 
 
-class Walls():
-    def __init__(self, corner):
-        pass
+class Walls(pygame.sprite.Sprite):
+    def __init__(self, corner, width, height, colour=(0,0,0)):
+        super(Walls, self).__init__()
+        self.surf = pygame.Surface((width, height))
+        self.surf.fill(colour)
+        self.rect = self.surf.get_rect()
+        self.rect.move_ip(corner)
+        return
+    
+    def draw(self):
+        screen.blit(self.surf, self.rect)
+        return
 
 
 def main():
-    player = Player([1210, 650])
-    # INCLUDE IN YOUR LEVEL:
     width, height = 1260, 700
     screen = pygame.display.set_mode([width, height], RESIZABLE|HWSURFACE|DOUBLEBUF)
+    player = Player([1210, 650])
+    # INCLUDE IN YOUR LEVEL:
+    key = Item([400, 400])
+    wallB1 = Walls([0, 0], screen.get_width(), 10)
+    wallB2 = Walls([0, 0], 10, screen.get_height())
+    wallB3 = Walls([0, screen.get_height()-10], screen.get_width(), 10)
+    wallB4 = Walls([screen.get_width()-10, 0], 10, screen.get_height())
     running = True
     clock = pygame.time.Clock()
     while running:
@@ -94,15 +115,20 @@ def main():
                 # Keeps the player's position constant
                 dw, dh = width - event.w, height - event.h
                 player.resize(dw, dh)
+                wallB1 = Walls([0, 0], screen.get_width(), 10)
+                wallB2 = Walls([0, 0], 10, screen.get_height())
+                wallB3 = Walls([0, screen.get_height()-10], screen.get_width(), 10)
+                wallB4 = Walls([screen.get_width()-10, 0], 10, screen.get_height())
                 width, height = event.w, event.h
                 
         # Sets screen colour
         screen.fill((255, 255, 255))
         # Draws boarder walls
-        pygame.draw.rect(screen, (0, 0, 0), ((0, 0), (screen.get_width(), 10)))
-        pygame.draw.rect(screen, (0, 0, 0), ((0, 0), (10, screen.get_height())))
-        pygame.draw.rect(screen, (0, 0, 0), ((0, screen.get_height()-10), (screen.get_width(), 10)))
-        pygame.draw.rect(screen, (0, 0, 0), ((screen.get_width()-10, 0), (10, screen.get_height())))
+        wallB1.draw()
+        wallB2.draw()
+        wallB3.draw()
+        wallB4.draw()
+        key.draw()
         # Updates player's position each loop
         player.update_position()
         player.draw()
@@ -112,5 +138,6 @@ def main():
     pygame.quit()
     return
 if __name__ == "__main__":
+    screen = pygame.display.set_mode([1260, 700], RESIZABLE|HWSURFACE|DOUBLEBUF)
     # main() used for testing new class functions
     main()

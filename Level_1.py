@@ -50,9 +50,9 @@ def run():
     e_spawn4 = [730, 350]
     e_spawn5 = [400, 330]
     e_spawn6 = [605, 100]
-    e_spawn7 = [1000, 180]
+    e_spawn7 = [1000, 190]
     # Set goal location
-    goal = [1050, 200]
+    goal = [1050, 195]
 
     # Initializing players and enemies
     player = Player(offset, sprite="Assets/Player.png")

@@ -9,22 +9,28 @@ Level: 0
 
 Description: Tutorial level
 
-NOTES:
-Bottom right is 1260 x 700
 """
 # offset indicates player spawn point
 offset = [50, 50]
+# Set enemy spawn DELETE
+offset2 = [100, 100]
 
-
+# Main function that runs
 def run():
     pygame.init()
+
+    # Initializing players and enemies
     player = engine.Player(offset)
+    enemy = engine.Enemy(offset2)
+
+
     screen = pygame.display.set_mode([1260, 700], RESIZABLE|HWSURFACE|DOUBLEBUF)
     running = True
 
 
     clock = pygame.time.Clock()
     while running:
+
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -52,11 +58,14 @@ def run():
         pygame.draw.rect(screen, (0, 0, 0), ((0, screen.get_height()-100), (screen.get_width(), 100)))
         pygame.draw.rect(screen, (0, 0, 0), ((0, screen.get_height()/2-100), (3*screen.get_width()/4, 200)))
 
-
         player.update_position()
-        player.draw()
-        pygame.display.flip()
+        # DELETE, replace with player.image
+        screen.blit(player.surf, player.rect)
+        # DELETE, replace with enemy.image
+        screen.blit(enemy.surf, enemy.rect)
 
+        # Keep at bottom for display reasons
+        pygame.display.flip()
         # Sets our framerate
         clock.tick(60)
         pass

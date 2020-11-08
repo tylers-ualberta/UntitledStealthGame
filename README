@@ -17,7 +17,7 @@ everything else. The directory of TitleScreen.py must also contain
 engine.py, all the level python files, and the Assets folder. 
 
 Notes and Assumptions:
-The file TitleScreen.py imports all the levels currently added in the
+The file UntitledStealthGame.py imports all the levels currently added in the
 game. Each of these levels imports from a file called engine.py, which
 contains all the needed classes for building and running levels in this
 game. There is a file called 'Assets' included in the project. This file

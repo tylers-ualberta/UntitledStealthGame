@@ -82,7 +82,7 @@ class Walls(pygame.sprite.Sprite):
         return
     
     def draw(self):
-        screen.blit(self.surf, (self.corner))
+        screen.blit(self.surf, self.rect)
         return
     
     def resize(self, dWidth, dHeight, width=0, height=0):

@@ -178,11 +178,15 @@ class MovingEnemy(Enemy):
 class Item(pygame.sprite.Sprite):
     def __init__(self, offset, colour=(255, 0, 0), sprite=""):
         super(Item, self).__init__()
-        self.surf = pygame.Surface((5, 5))
-        self.surf.fill(colour)
-        self.rect = self.surf.get_rect()
+        if sprite == "":
+            self.surf = pygame.Surface((5, 5))
+            self.surf.fill(colour)
+            self.rect = self.surf.get_rect()
+            self.rect.move_ip(offset)
+        else:
+            self.rect = pygame.Rect(offset[0], offset[1], 25, 40)
         self.offset = offset
-        self.rect.move_ip(offset)
+        self.image = pygame.image.load(sprite)
         pass
     
     def draw(self, screen):

@@ -73,19 +73,10 @@ class Walls(pygame.sprite.Sprite):
         self.surf.fill(colour)
         self.rect = self.surf.get_rect()
         self.rect.move_ip(corner)
-        self.scaleW = False
-        self.scaleH = False
-        if width == screen.get_width():
-            self.scaleW = True
-        if height == screen.get_height():
-            self.scaleH = True
         return
     
     def draw(self):
         screen.blit(self.surf, self.rect)
-        return
-    
-    def resize(self, dWidth, dHeight, width=0, height=0):
         return
 
 
@@ -117,10 +108,10 @@ def main():
                 # Keeps the player's position constant
                 dw, dh = width - event.w, height - event.h
                 player.resize(dw, dh)
-                wallB1.resize(dw, dh, width, height)
-                wallB2.resize(dw, dh, width, height)
-                wallB3.resize(dw, dh, width, height)
-                wallB4.resize(dw, dh, width, height)
+                wallB1 = Walls([0, 0], screen.get_width(), 10)
+                wallB2 = Walls([0, 0], 10, screen.get_height())
+                wallB3 = Walls([0, screen.get_height()-10], screen.get_width(), 10)
+                wallB4 = Walls([screen.get_width()-10, 0], 10, screen.get_height())
                 width, height = event.w, event.h
                 
         # Sets screen colour

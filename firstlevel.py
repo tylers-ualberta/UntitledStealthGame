@@ -18,25 +18,25 @@ while running:
         if event.type == pygame.KEYDOWN:
             if event.key == K_ESCAPE:
                 running = False
-    keys = pygame.key.get_pressed()
-    if keys[K_w]:
-        offset[1] += 0.5
-        player_location = (screen.get_width()-offset[0], screen.get_height()-offset[1])
-    if keys[K_a]:
-        offset[0] += 0.5
-        player_location = (screen.get_width()-offset[0], screen.get_height()-offset[1])
-    if keys[K_s]:
-        offset[1] -= 0.5
-        player_location = (screen.get_width()-offset[0], screen.get_height()-offset[1])
-    if keys[K_d]:
-        offset[0] -= 0.5
-        player_location = (screen.get_width()-offset[0], screen.get_height()-offset[1])
-        
         if event.type == pygame.VIDEORESIZE:
             # There's some code to add back window content here.
             surface = pygame.display.set_mode((event.w, event.h),
                                               RESIZABLE|HWSURFACE|DOUBLEBUF)
             player_location = (screen.get_width()-offset[0], screen.get_height()-offset[1])
+        
+    keys = pygame.key.get_pressed()
+    if keys[K_w]:
+        offset[1] += 1
+        player_location = (screen.get_width()-offset[0], screen.get_height()-offset[1])
+    if keys[K_a]:
+        offset[0] += 1
+        player_location = (screen.get_width()-offset[0], screen.get_height()-offset[1])
+    if keys[K_s]:
+        offset[1] -= 1
+        player_location = (screen.get_width()-offset[0], screen.get_height()-offset[1])
+    if keys[K_d]:
+        offset[0] -= 1
+        player_location = (screen.get_width()-offset[0], screen.get_height()-offset[1])
             
 
     screen.fill((255, 255, 255))

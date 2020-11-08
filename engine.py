@@ -11,7 +11,6 @@ class Player(pygame.sprite.Sprite):
             self.rect = self.surf.get_rect()
             self.rect.move_ip(offset)
             self.surfFlag = True
-            print(self.rect)
         else:
             self.rect = pygame.Rect(offset[0], offset[1], 15, 40)
             self.image = pygame.image.load(sprite)
@@ -209,16 +208,30 @@ class Walls(pygame.sprite.Sprite):
 
 
 class Cone(Enemy):
-    def __init__(self, offset, orientation="left", speed=0, colour=(255, 255, 0)):
+    def __init__(self, offset, orientation="l", colour=(255, 255, 0)):
         super().__init__(offset, colour=(255, 0, 0))
-        self.image = pygame.image.load(r"stuartbranch/Cone.png")
+        self.image = pygame.image.load(r"Hackathon/Assets/Cone.png")
         self.orient(offset, orientation)
         self.image = pygame.transform.scale2x(self.image)
         self.image.set_colorkey((255, 255, 255), RLEACCEL)
         # Change self.rect to be hitbox DELETE
-        self.rect = [pygame.Rect(offset[0], offset[1], 0, 0), pygame.Rect(offset[0], offset[1] + 9, 32, 80),
-                    pygame.Rect(offset[0] + 32, offset[1] + 18, 32, 60), pygame.Rect(offset[0] + 64, offset[1] + 27, 32, 40), 
-                    pygame.Rect(offset[0] + 96, offset[1] + 36, 32, 20), pygame.Rect(offset[0] + 112, offset[1] + 42, 16, 10)]
+        if orientation=="l":
+            self.rect = [pygame.Rect(offset[0], offset[1], 0, 0), pygame.Rect(offset[0], offset[1] + 9, 32, 80),
+                        pygame.Rect(offset[0] + 32, offset[1] + 18, 32, 60), pygame.Rect(offset[0] + 64, offset[1] + 27, 32, 40), 
+                        pygame.Rect(offset[0] + 96, offset[1] + 36, 32, 20), pygame.Rect(offset[0] + 112, offset[1] + 42, 16, 10)]
+        elif orientation=="r":
+            print(self.offset)
+            self.rect = [pygame.Rect(offset[0], offset[1], 0, 0), pygame.Rect(offset[0] + 138, offset[1], 32, 80),
+                        pygame.Rect(offset[0] + 122, offset[1] + 18, 32, 60), pygame.Rect(offset[0] + 90, offset[1] + 27, 32, 40), 
+                        pygame.Rect(offset[0] + 58, offset[1] + 36, 32, 20), pygame.Rect(offset[0] + 24, offset[1] + 42, 16, 10)]
+        elif orientation=="u":
+            self.rect = [pygame.Rect(offset[0], offset[1], 0, 0), pygame.Rect(offset[0] + 10, offset[1], 80, 32),
+                        pygame.Rect(offset[0] + 19, offset[1] + 32, 60, 32), pygame.Rect(offset[0] + 27, offset[1] + 64, 40, 32), 
+                        pygame.Rect(offset[0] + 36, offset[1] + 96, 20, 32), pygame.Rect(offset[0] + 44, offset[1] + 112, 10, 16)]
+        else:
+            self.rect = [pygame.Rect(offset[0], offset[1], 0, 0), pygame.Rect(offset[0] + 8, offset[1] + 138, 80, 32),
+                        pygame.Rect(offset[0] + 17, offset[1] + 122, 60, 32), pygame.Rect(offset[0] + 25, offset[1] + 90, 40, 32), 
+                        pygame.Rect(offset[0] + 34, offset[1] + 58, 20, 32), pygame.Rect(offset[0] + 42, offset[1] + 26, 10, 16)]
         self.offset = offset
 
     def draw(self, screen):
@@ -249,23 +262,27 @@ def main():
     width, height = 1260, 700
     screen = pygame.display.set_mode([width, height], HWSURFACE|DOUBLEBUF)
     player = Player([1210, 650])
-    all_sprites = pygame.sprite.Group()
-    wall_sprites = pygame.sprite.Group()
-    enemies = pygame.sprite.Group()
-    items = pygame.sprite.Group()
-    all_sprites.add(player)
-    # INCLUDE IN YOUR LEVEL:
-    # INCLUDE IN YOUR LEVEL:
-    screen = pygame.display.set_mode([1260, 700], HWSURFACE|DOUBLEBUF)
-    running = True
-    # Add all sprites to their appropriate sprite group(s). Any sprites from the
-    # assests folder need to be in all_sprites_img.
+    flagL = Cone([200, 200])
+    flagR = Cone([200, 200], 'r')
+    flagU = Cone([500, 500], 'u')
+    flagD = Cone([700, 450], 'd')
+
     all_sprites_surf = pygame.sprite.Group()
     all_sprites_img = pygame.sprite.Group()
     wall_sprites = pygame.sprite.Group()
     enemies = pygame.sprite.Group()
     items = pygame.sprite.Group()
     cone_sprites = pygame.sprite.Group()
+    cone_sprites.add(flagL)
+    cone_sprites.add(flagR)
+    cone_sprites.add(flagD)
+    cone_sprites.add(flagU)
+    all_sprites_surf.add(player)
+    # INCLUDE IN YOUR LEVEL:
+    screen = pygame.display.set_mode([1260, 700], HWSURFACE|DOUBLEBUF)
+    running = True
+    # Add all sprites to their appropriate sprite group(s). Any sprites from the
+    # assests folder need to be in all_sprites_img.
     clock = pygame.time.Clock()
     wallB1 = Walls([0, 0], screen.get_width(), 10)
     wallB2 = Walls([0, 0], 10, screen.get_height())
@@ -306,8 +323,8 @@ def main():
             running = False
 
 
-        if pygame.sprite.collide_rect(player, Item):
-            running = False
+        # if pygame.sprite.collide_rect(player, Item):
+        #     running = False
         
         # Vision cone collision
         for cone in cone_sprites:

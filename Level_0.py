@@ -67,10 +67,9 @@ def run():
     all_sprites_img.add(player)
     all_sprites_img.add(enemy)
     enemies.add(enemy)
-    all_sprites_img.add(cone)
     cone_sprites.add(cone)
     all_sprites_img.add(endflag)
-    items.add(items)
+    items.add(endflag)
 
     start_ticks = pygame.time.get_ticks() #starter tick
 
@@ -100,22 +99,18 @@ def run():
             if cone_state == 0:
                 cone.kill()
                 cone = Cone([3*screen.get_width()/4+20, screen.get_height()/2-10], orientation="d")
-                all_sprites_img.add(cone)
                 cone_sprites.add(cone)
             elif cone_state == 1:
                 cone.kill()
                 cone = Cone([3*screen.get_width()/4+20, screen.get_height()/2-10], orientation="r")
-                all_sprites_img.add(cone)
                 cone_sprites.add(cone)
             elif cone_state == 2:
                 cone.kill()
                 cone = Cone([3*screen.get_width()/4+20, screen.get_height()/2-10], orientation="u")
-                all_sprites_img.add(cone)
                 cone_sprites.add(cone)
             elif cone_state == 3:
                 cone.kill()
                 cone = Cone([3*screen.get_width()/4+20, screen.get_height()/2-10], orientation="r")
-                all_sprites_img.add(cone)
                 cone_sprites.add(cone)
             cone_state += 1
 
@@ -127,13 +122,46 @@ def run():
         for entity in all_sprites_surf:
             screen.blit(entity.surf, entity.rect)
         
+        for entity in cone_sprites:
+            screen.blit(entity.image, entity.rect[0])
+            for rect in entity.rect:
+                screen.blit(entity.surf, rect)
+        pygame.display.flip()
+
+        # Enemy collision
+        if pygame.sprite.spritecollideany(player, enemies):
+            player.kill()
+            running = False
+
+        # Flag collision
+        if pygame.sprite.collide_rect(player, endflag):
+            running = False
+
+        # Vision cone collision
+        for cone in cone_sprites:
+            for rect in cone.rect:
+                if player.rect.colliderect(rect):
+                    player.kill()
+                    running = False
+
+        # Wall collision
+        if pygame.sprite.spritecollideany(player, wall_sprites):
+            col_wall = pygame.sprite.spritecollide(player, wall_sprites, False)[0]
+            if player.rect.top < col_wall.rect.bottom < player.rect.bottom:
+                player.rect.top = col_wall.rect.bottom
+            elif player.rect.left < col_wall.rect.right < player.rect.right:
+                player.rect.left = col_wall.rect.right
+            elif player.rect.bottom > col_wall.rect.top > player.rect.top:
+                player.rect.bottom = col_wall.rect.top
+            elif player.rect.right > col_wall.rect.left > player.rect.left:
+                player.rect.right = col_wall.rect.left
+
         # Keep at bottom for display reasons
         pygame.display.flip()
         
         # Initialize frame rate
         clock.tick(60)
     return end
-
 
 
 if __name__ == "__main__":

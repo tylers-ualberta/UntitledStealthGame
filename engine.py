@@ -33,7 +33,7 @@ class Player(pygame.sprite.Sprite):
         else:
             keys = pygame.key.get_pressed()  # Get pressed idea: https://stackoverflow.com/questions/9961563/how-can-i-make-a-sprite-move-when-key-is-held-down
             if keys[K_w]:
-                self.rect.move_ip(0, -2)
+                self.rect.move_ip(0, -4)
                 if self.AnimationCount <= 5:
                     self.image = pygame.image.load('Assets/PlayerWalking.png')
                     self.AnimationCount += 1
@@ -43,7 +43,7 @@ class Player(pygame.sprite.Sprite):
                 else:
                     self.AnimationCount = 0
             if keys[K_a]:
-                self.rect.move_ip(-2, 0)
+                self.rect.move_ip(-4, 0)
                 if self.AnimationCount <= 5:
                     self.image = pygame.image.load('Assets/PlayerWalking.png')
                     self.AnimationCount += 1
@@ -53,7 +53,7 @@ class Player(pygame.sprite.Sprite):
                 else:
                     self.AnimationCount = 0
             if keys[K_s]:
-                self.rect.move_ip(0, 2)
+                self.rect.move_ip(0, 4)
                 if self.AnimationCount <= 5:
                     self.image = pygame.image.load('Assets/PlayerWalking.png')
                     self.AnimationCount += 1
@@ -63,7 +63,7 @@ class Player(pygame.sprite.Sprite):
                 else:
                     self.AnimationCount = 0
             if keys[K_d]:
-                self.rect.move_ip(2, 0)
+                self.rect.move_ip(4, 0)
                 if self.AnimationCount <= 5:
                     self.image = pygame.image.load('Assets/PlayerWalking.png')
                     self.AnimationCount += 1
@@ -185,8 +185,7 @@ class Item(pygame.sprite.Sprite):
             self.rect.move_ip(offset)
         else:
             self.rect = pygame.Rect(offset[0], offset[1], 25, 40)
-        self.offset = offset
-        self.image = pygame.image.load(sprite)
+            self.image = pygame.image.load(sprite)
         pass
     
     def draw(self, screen):

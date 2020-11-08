@@ -216,7 +216,7 @@ class Cone(Enemy):
         self.speed = speed
         self.rect.move_ip(offset)
 
-    def draw(self):
+    def draw(self, screen):
         screen.blit(self.surf, self.rect)
         return
 

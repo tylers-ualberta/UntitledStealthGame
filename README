@@ -1,0 +1,46 @@
+Contributors:
+Tyler Sadler
+Aaron Lin
+Stuart Hamilton 
+Cole Hoff
+
+HackED Beta 2020, Team STACed Beta Submission
+'Untitled Stealth Game'
+
+This game is a very simple stealth game, in which the player must avoid
+detection from 'security guards' and make it to the end flags to get to
+the next level. 
+
+Running Instructions:
+All the code should be run through the TitleScreen.py file, which calls
+everything else. The directory of TitleScreen.py must also contain
+engine.py, all the level python files, and the Assets folder. 
+
+Notes and Assumptions:
+The file TitleScreen.py imports all the levels currently added in the
+game. Each of these levels imports from a file called engine.py, which
+contains all the needed classes for building and running levels in this
+game. There is a file called 'Assets' included in the project. This file
+contains simple pixel art stored as .png files. These are the images used
+to represent the player and the enemies during gameplay.
+
+The class Player(pygame.sprite.Sprite) defines everything about the
+positioning and the appearance of the player character. It has the
+method update_position(), which takes input from the movement keys, WASD,
+and changes the positioning of the character to match the user's desired 
+movement. It is also responsible for the walking animation of the player 
+character.
+
+The class Enemy(pygame.sprite.Sprite) creates the stationary enemies
+of the game. Since these enemies don't move, this class is mostly used
+to position the enemies on the screen.
+
+The class MovingEnemy(Enemy) is a subclass of Enemy which inclues
+movement capabilities. 
+
+The class Item(pygame.sprite.Sprite) is as of now only used to control
+the end flags. However, it allows for future implementation of more
+features such as power ups and keys to open doors.
+
+The class Walls(pygame.sprite.Sprite) is used to control the walls which
+inhibit player movement in the levels. 

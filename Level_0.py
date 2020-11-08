@@ -151,32 +151,32 @@ def run():
             if len(col_walls) == 2:
                 col_wall = col_walls[0]
                 if player.rect.left < col_wall.rect.right < player.rect.right:
-                    player.rect.left = col_wall.rect.right
+                    player.rect.move_ip(5, 0)
                 elif player.rect.top < col_wall.rect.bottom < player.rect.bottom:
-                    player.rect.top = col_wall.rect.bottom
+                    player.rect.move_ip(0, 5)
                 elif player.rect.bottom > col_wall.rect.top > player.rect.top:
-                    player.rect.bottom = col_wall.rect.top
+                    player.rect.move_ip(0, -5)
                 elif player.rect.right > col_wall.rect.left > player.rect.left:
-                    player.rect.right = col_wall.rect.left
+                    player.rect.move_ip(-5, 0)
                 col_wall2 = col_walls[1]
                 if player.rect.left < col_wall2.rect.right < player.rect.right:
-                    player.rect.left = col_wall2.rect.right
+                    player.rect.move_ip(5, 0)
                 elif player.rect.top < col_wall2.rect.bottom < player.rect.bottom:
-                    player.rect.top = col_wall2.rect.bottom
+                    player.rect.move_ip(0, 5)
                 elif player.rect.bottom > col_wall2.rect.top > player.rect.top:
-                    player.rect.bottom = col_wall2.rect.top
+                    player.rect.move_ip(0, -5)
                 elif player.rect.right > col_wall2.rect.left > player.rect.left:
-                    player.rect.right = col_wall2.rect.left
+                    player.rect.move_ip(-5, 0)
             else:
                 col_wall = pygame.sprite.spritecollide(player, wall_sprites, False)[0]
                 if player.rect.left < col_wall.rect.right < player.rect.right:
-                    player.rect.left = col_wall.rect.right
+                    player.rect.move_ip(5, 0)
                 elif player.rect.top < col_wall.rect.bottom < player.rect.bottom:
-                    player.rect.top = col_wall.rect.bottom
+                    player.rect.move_ip(0, 5)
                 elif player.rect.bottom > col_wall.rect.top > player.rect.top:
-                    player.rect.bottom = col_wall.rect.top
+                    player.rect.move_ip(0, -5)
                 elif player.rect.right > col_wall.rect.left > player.rect.left:
-                    player.rect.right = col_wall.rect.left
+                    player.rect.move_ip(-5, 0)
 
         # Keep at bottom for display reasons
         pygame.display.flip()

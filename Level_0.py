@@ -12,6 +12,7 @@ Description: Tutorial level
 """
 
 pygame.init()
+end = False
 # Main function that runs
 def run():
 
@@ -23,11 +24,14 @@ def run():
     offset = [30, screen.get_height()-180]
     # Set enemy spawn
     e_spawn1 = [3*screen.get_width()/4+20, screen.get_height()/2-10]
+    # Set goal location
+    goal = [50, screen.get_height()/5+20]
 
     # Initializing players and enemies
     player = Player(offset, sprite="Assets/Player.png")
     enemy = Enemy(e_spawn1, sprite="Assets/SecurityGuard.png")
     cone = Cone(e_spawn1, orientation="r")
+    endflag = Item(goal, sprite="Assets/EndFlag.png")
 
     start_ticks = pygame.time.get_ticks() #starter tick
 
@@ -68,7 +72,7 @@ def run():
         # Calculates time
         time = (pygame.time.get_ticks() - start_ticks) / 1000 #calculate how many seconds
         # Change view cone
-        if time > 1:
+        if time > 2:
             start_ticks = pygame.time.get_ticks()
         
             if cone_state > 3:
@@ -91,6 +95,7 @@ def run():
         screen.blit(player.image, player.rect)
         screen.blit(enemy.image, enemy.rect)
         screen.blit(cone.image, cone.rect)
+        screen.blit(endflag.image, endflag.rect)
 
         # Walls
         screen.blit(wallB1.surf, wallB1.rect)
@@ -107,9 +112,10 @@ def run():
         
         # Initialize frame rate
         clock.tick(60)
-        pass
+    return end
 
-    pygame.quit()
+
 
 if __name__ == "__main__":
     run()
+    pygame.quit()

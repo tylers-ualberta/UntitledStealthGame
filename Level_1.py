@@ -311,9 +311,9 @@ def run():
         
         # Initialize frame rate
         clock.tick(30)
-        pass
+    return(end)
 
-    pygame.quit()
 
 if __name__ == "__main__":
     run()
+    pygame.quit()

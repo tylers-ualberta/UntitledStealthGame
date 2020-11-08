@@ -220,7 +220,6 @@ class Cone(Enemy):
                         pygame.Rect(offset[0] + 32, offset[1] + 18, 32, 60), pygame.Rect(offset[0] + 64, offset[1] + 27, 32, 40), 
                         pygame.Rect(offset[0] + 96, offset[1] + 36, 32, 20), pygame.Rect(offset[0] + 112, offset[1] + 42, 16, 10)]
         elif orientation=="r":
-            print(self.offset)
             self.rect = [pygame.Rect(offset[0], offset[1], 0, 0), pygame.Rect(offset[0] + 138, offset[1], 32, 80),
                         pygame.Rect(offset[0] + 122, offset[1] + 18, 32, 60), pygame.Rect(offset[0] + 90, offset[1] + 27, 32, 40), 
                         pygame.Rect(offset[0] + 58, offset[1] + 36, 32, 20), pygame.Rect(offset[0] + 24, offset[1] + 42, 16, 10)]

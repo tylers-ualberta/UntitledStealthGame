@@ -47,6 +47,7 @@ def run():
     e_spawn1 = [300, 510]
     e_spawn2 = [850, 650]
     e_spawn3 = [1100, 350]
+    e_spawn4 = [730, 350]
     # Set goal location
     goal = [50, screen.get_height()/5+20]
 
@@ -55,9 +56,11 @@ def run():
     enemy1 = Enemy(e_spawn1, sprite="Assets/SecurityGuard.png")
     enemy2 = Enemy(e_spawn2, sprite="Assets/SecurityGuard.png")
     enemy3 = Enemy(e_spawn3, sprite="Assets/SecurityGuard.png")
+    enemy4 = Enemy(e_spawn4, sprite="Assets/SecurityGuard.png")
     cone1 = Cone(e_spawn1, orientation="d")
     cone2 = Cone(e_spawn2, orientation="u")
     cone3 = Cone(e_spawn3, orientation="u")
+    cone4 = Cone(e_spawn4, orientation="d")
     endflag = Item(goal, sprite="Assets/EndFlag.png")
 
     start_ticks = pygame.time.get_ticks() #starter tick
@@ -66,6 +69,7 @@ def run():
     cone1_state = 0
     cone2_state = 0
     cone3_state = 0
+    cone4_state = 0
 
     # Start clock for clock.tick
     clock = pygame.time.Clock()
@@ -99,6 +103,8 @@ def run():
         enemies.add(enemy2)
         all_sprites_img.add(enemy3)
         enemies.add(enemy3)
+        all_sprites_img.add(enemy4)
+        enemies.add(enemy4)
         all_sprites_img.add(endflag)
         items.add(endflag)
         all_sprites_img.add(cone1)
@@ -107,6 +113,8 @@ def run():
         cone_sprites.add(cone2)
         all_sprites_img.add(cone3)
         cone_sprites.add(cone3)
+        all_sprites_img.add(cone4)
+        cone_sprites.add(cone4)
 
         # Add walls to sprite group
         all_sprites_surf.add(wall1)
@@ -191,6 +199,31 @@ def run():
                 cone_sprites.add(cone3)
             cone3_state += 1
 
+        # Enemy 4
+            if cone4_state > 3:
+                cone4_state = 0
+            if cone4_state == 0:
+                cone4.kill()
+                cone4 = Cone([730, 350], orientation="l")
+                all_sprites_img.add(cone4)
+                cone_sprites.add(cone4)
+            elif cone4_state == 1:
+                cone4.kill()
+                cone4 = Cone([730, 350], orientation="d")
+                all_sprites_img.add(cone4)
+                cone_sprites.add(cone4)
+            elif cone4_state == 2:
+                cone4.kill()
+                cone4 = Cone([730, 350], orientation="r")
+                all_sprites_img.add(cone4)
+                cone_sprites.add(cone4)
+            elif cone4_state == 3:
+                cone4.kill()
+                cone4 = Cone([730, 350], orientation="u")
+                all_sprites_img.add(cone4)
+                cone_sprites.add(cone4)
+            cone4_state += 1
+
         # Print all sprites
         for entity in all_sprites_surf:
             screen.blit(entity.surf, entity.rect)
@@ -201,7 +234,7 @@ def run():
         pygame.display.flip()
         
         # Initialize frame rate
-        clock.tick(60)
+        clock.tick(30)
         pass
 
     pygame.quit()

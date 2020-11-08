@@ -146,15 +146,36 @@ def run():
 
         # Wall collision
         if pygame.sprite.spritecollideany(player, wall_sprites):
-            col_wall = pygame.sprite.spritecollide(player, wall_sprites, False)[0]
-            if player.rect.top < col_wall.rect.bottom < player.rect.bottom:
-                player.rect.top = col_wall.rect.bottom
-            elif player.rect.left < col_wall.rect.right < player.rect.right:
-                player.rect.left = col_wall.rect.right
-            elif player.rect.bottom > col_wall.rect.top > player.rect.top:
-                player.rect.bottom = col_wall.rect.top
-            elif player.rect.right > col_wall.rect.left > player.rect.left:
-                player.rect.right = col_wall.rect.left
+            col_walls = (pygame.sprite.spritecollide(player, wall_sprites, False))
+            if len(col_walls) == 2:
+                col_wall = col_walls[0]
+                if player.rect.left < col_wall.rect.right < player.rect.right:
+                    player.rect.left = col_wall.rect.right
+                elif player.rect.top < col_wall.rect.bottom < player.rect.bottom:
+                    player.rect.top = col_wall.rect.bottom
+                elif player.rect.bottom > col_wall.rect.top > player.rect.top:
+                    player.rect.bottom = col_wall.rect.top
+                elif player.rect.right > col_wall.rect.left > player.rect.left:
+                    player.rect.right = col_wall.rect.left
+                col_wall2 = col_walls[1]
+                if player.rect.left < col_wall2.rect.right < player.rect.right:
+                    player.rect.left = col_wall2.rect.right
+                elif player.rect.top < col_wall2.rect.bottom < player.rect.bottom:
+                    player.rect.top = col_wall2.rect.bottom
+                elif player.rect.bottom > col_wall2.rect.top > player.rect.top:
+                    player.rect.bottom = col_wall2.rect.top
+                elif player.rect.right > col_wall2.rect.left > player.rect.left:
+                    player.rect.right = col_wall2.rect.left
+            else:
+                col_wall = pygame.sprite.spritecollide(player, wall_sprites, False)[0]
+                if player.rect.left < col_wall.rect.right < player.rect.right:
+                    player.rect.left = col_wall.rect.right
+                elif player.rect.top < col_wall.rect.bottom < player.rect.bottom:
+                    player.rect.top = col_wall.rect.bottom
+                elif player.rect.bottom > col_wall.rect.top > player.rect.top:
+                    player.rect.bottom = col_wall.rect.top
+                elif player.rect.right > col_wall.rect.left > player.rect.left:
+                    player.rect.right = col_wall.rect.left
 
         # Keep at bottom for display reasons
         pygame.display.flip()

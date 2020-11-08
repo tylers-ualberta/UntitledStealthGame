@@ -121,15 +121,10 @@ def run():
         enemies.add(enemy7)
         all_sprites_img.add(endflag)
         items.add(endflag)
-        all_sprites_img.add(cone1)
         cone_sprites.add(cone1)
-        all_sprites_img.add(cone2)
         cone_sprites.add(cone2)
-        all_sprites_img.add(cone3)
         cone_sprites.add(cone3)
-        all_sprites_img.add(cone4)
         cone_sprites.add(cone4)
-        all_sprites_img.add(cone6)
         cone_sprites.add(cone6)
 
         # Add walls to sprite group
@@ -168,12 +163,10 @@ def run():
             if cone1_state == 0:
                 cone1.kill()
                 cone1 = Cone([300, 510], orientation="r")
-                all_sprites_img.add(cone1)
                 cone_sprites.add(cone1)
             elif cone1_state == 1:
                 cone1.kill()
                 cone1 = Cone([300, 510], orientation="d")
-                all_sprites_img.add(cone1)
                 cone_sprites.add(cone1)
             cone1_state += 1
 
@@ -183,12 +176,10 @@ def run():
             if cone2_state == 0:
                 cone2.kill()
                 cone2 = Cone([850, 650], orientation="r")
-                all_sprites_img.add(cone2)
                 cone_sprites.add(cone2)
             elif cone2_state == 1:
                 cone2.kill()
                 cone2 = Cone([850, 650], orientation="u")
-                all_sprites_img.add(cone2)
                 cone_sprites.add(cone2)
             cone2_state += 1
 
@@ -198,22 +189,18 @@ def run():
             if cone3_state == 0:
                 cone3.kill()
                 cone3 = Cone([1100, 350], orientation="l")
-                all_sprites_img.add(cone3)
                 cone_sprites.add(cone3)
             elif cone3_state == 1:
                 cone3.kill()
                 cone3 = Cone([1100, 350], orientation="d")
-                all_sprites_img.add(cone3)
                 cone_sprites.add(cone3)
             elif cone3_state == 2:
                 cone3.kill()
                 cone3 = Cone([1100, 350], orientation="r")
-                all_sprites_img.add(cone3)
                 cone_sprites.add(cone3)
             elif cone3_state == 3:
                 cone3.kill()
                 cone3 = Cone([1100, 350], orientation="u")
-                all_sprites_img.add(cone3)
                 cone_sprites.add(cone3)
             cone3_state += 1
 
@@ -223,22 +210,18 @@ def run():
             if cone4_state == 0:
                 cone4.kill()
                 cone4 = Cone([730, 350], orientation="l")
-                all_sprites_img.add(cone4)
                 cone_sprites.add(cone4)
             elif cone4_state == 1:
                 cone4.kill()
                 cone4 = Cone([730, 350], orientation="d")
-                all_sprites_img.add(cone4)
                 cone_sprites.add(cone4)
             elif cone4_state == 2:
                 cone4.kill()
                 cone4 = Cone([730, 350], orientation="r")
-                all_sprites_img.add(cone4)
                 cone_sprites.add(cone4)
             elif cone4_state == 3:
                 cone4.kill()
                 cone4 = Cone([730, 350], orientation="u")
-                all_sprites_img.add(cone4)
                 cone_sprites.add(cone4)
             cone4_state += 1
 
@@ -248,22 +231,18 @@ def run():
             if cone6_state == 0:
                 cone6.kill()
                 cone6 = Cone([605, 100], orientation="u")
-                all_sprites_img.add(cone6)
                 cone_sprites.add(cone6)
             elif cone6_state == 1:
                 cone6.kill()
                 cone6 = Cone([605, 100], orientation="r")
-                all_sprites_img.add(cone6)
                 cone_sprites.add(cone6)
             elif cone6_state == 2:
                 cone6.kill()
                 cone6 = Cone([605, 100], orientation="d")
-                all_sprites_img.add(cone6)
                 cone_sprites.add(cone6)
             elif cone6_state == 3:
                 cone6.kill()
                 cone6 = Cone([605, 100], orientation="l")
-                all_sprites_img.add(cone6)
                 cone_sprites.add(cone6)
             cone6_state += 1
 
@@ -272,6 +251,39 @@ def run():
             screen.blit(entity.surf, entity.rect)
         for entity in all_sprites_img:
             screen.blit(entity.image, entity.rect)
+
+        # Enemy collision
+        if pygame.sprite.spritecollideany(player, enemies):
+            player.kill()
+            running = False
+
+        # Flag collision
+        if pygame.sprite.collide_rect(player, endflag):
+            running = False
+            end = True
+
+        # Vision cone collision
+        for cone in cone_sprites:
+            for rect in cone.rect:
+                if player.rect.colliderect(rect):
+                    player.kill()
+                    running = False
+        for entity in cone_sprites:
+            screen.blit(entity.image, entity.rect[0])
+            for rect in entity.rect:
+                screen.blit(entity.surf, rect)
+
+        # Wall collision
+        if pygame.sprite.spritecollideany(player, wall_sprites):
+            col_wall = pygame.sprite.spritecollide(player, wall_sprites, False)[0]
+            if player.rect.left < col_wall.rect.right < player.rect.right:
+                player.rect.left = col_wall.rect.right
+            elif player.rect.top < col_wall.rect.bottom < player.rect.bottom:
+                player.rect.top = col_wall.rect.bottom
+            elif player.rect.bottom > col_wall.rect.top > player.rect.top:
+                player.rect.bottom = col_wall.rect.top
+            elif player.rect.right > col_wall.rect.left > player.rect.left:
+                player.rect.right = col_wall.rect.left
 
         # Keep at bottom for display reasons
         pygame.display.flip()

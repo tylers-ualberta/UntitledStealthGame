@@ -44,6 +44,15 @@ while running:
             screen.blit(entity.surf, rect)
     pygame.display.flip()
 
+    # Enemy collision
+    if pygame.sprite.spritecollideany(player, enemies):
+        player.kill()
+        running = False
+
+    # Flag collision
+    if pygame.sprite.collide_rect(player, Item):
+        running = False
+
     # Vision cone collision
     for cone in cone_sprites:
         for rect in cone.rect:

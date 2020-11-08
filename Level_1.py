@@ -46,6 +46,7 @@ def run():
     # Set enemy spawn
     e_spawn1 = [300, 510]
     e_spawn2 = [850, 650]
+    e_spawn3 = [1100, 350]
     # Set goal location
     goal = [50, screen.get_height()/5+20]
 
@@ -53,8 +54,10 @@ def run():
     player = Player(offset, sprite="Assets/Player.png")
     enemy1 = Enemy(e_spawn1, sprite="Assets/SecurityGuard.png")
     enemy2 = Enemy(e_spawn2, sprite="Assets/SecurityGuard.png")
+    enemy3 = Enemy(e_spawn3, sprite="Assets/SecurityGuard.png")
     cone1 = Cone(e_spawn1, orientation="d")
     cone2 = Cone(e_spawn2, orientation="u")
+    cone3 = Cone(e_spawn3, orientation="u")
     endflag = Item(goal, sprite="Assets/EndFlag.png")
 
     start_ticks = pygame.time.get_ticks() #starter tick
@@ -62,6 +65,7 @@ def run():
     # Initialize Cone State
     cone1_state = 0
     cone2_state = 0
+    cone3_state = 0
 
     # Start clock for clock.tick
     clock = pygame.time.Clock()
@@ -93,12 +97,16 @@ def run():
         enemies.add(enemy1)
         all_sprites_img.add(enemy2)
         enemies.add(enemy2)
+        all_sprites_img.add(enemy3)
+        enemies.add(enemy3)
         all_sprites_img.add(endflag)
         items.add(endflag)
         all_sprites_img.add(cone1)
         cone_sprites.add(cone1)
         all_sprites_img.add(cone2)
         cone_sprites.add(cone2)
+        all_sprites_img.add(cone3)
+        cone_sprites.add(cone3)
 
         # Add walls to sprite group
         all_sprites_surf.add(wall1)
@@ -129,7 +137,7 @@ def run():
             start_ticks = pygame.time.get_ticks()
         
         # Enemy 1
-            if cone1_state > 2:
+            if cone1_state > 1:
                 cone1_state = 0
             if cone1_state == 0:
                 cone1.kill()
@@ -144,7 +152,7 @@ def run():
             cone1_state += 1
 
         # Enemy 2
-            if cone2_state > 2:
+            if cone2_state > 1:
                 cone2_state = 0
             if cone2_state == 0:
                 cone2.kill()
@@ -157,6 +165,31 @@ def run():
                 all_sprites_img.add(cone2)
                 cone_sprites.add(cone2)
             cone2_state += 1
+
+        # Enemy 3
+            if cone3_state > 3:
+                cone3_state = 0
+            if cone3_state == 0:
+                cone3.kill()
+                cone3 = Cone([1100, 350], orientation="l")
+                all_sprites_img.add(cone3)
+                cone_sprites.add(cone3)
+            elif cone3_state == 1:
+                cone3.kill()
+                cone3 = Cone([1100, 350], orientation="d")
+                all_sprites_img.add(cone3)
+                cone_sprites.add(cone3)
+            elif cone3_state == 2:
+                cone3.kill()
+                cone3 = Cone([1100, 350], orientation="r")
+                all_sprites_img.add(cone3)
+                cone_sprites.add(cone3)
+            elif cone3_state == 3:
+                cone3.kill()
+                cone3 = Cone([1100, 350], orientation="u")
+                all_sprites_img.add(cone3)
+                cone_sprites.add(cone3)
+            cone3_state += 1
 
         # Print all sprites
         for entity in all_sprites_surf:

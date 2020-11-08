@@ -11,7 +11,6 @@ background = (100,100,100)
 red = (225,0,0)
 black = (0,0,0)
 
-
 screen = pygame.display.set_mode([1260, 700], HWSURFACE|DOUBLEBUF)
 screen.fill(background)
 pygame.display.flip()

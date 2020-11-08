@@ -182,7 +182,7 @@ def run():
         pygame.display.flip()
         
         # Initialize frame rate
-        clock.tick(60)
+        clock.tick(30)
     return end
 
 

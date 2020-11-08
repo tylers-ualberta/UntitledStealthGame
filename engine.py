@@ -204,8 +204,8 @@ class Walls(pygame.sprite.Sprite):
         return
 
 class Cone(Enemy):
-    def __init__(self, offset, orientation="left", speed=0, colour=(255, 255, 0)):
-        super().__init__(offset, speed=0, colour=(255, 255, 0))
+    def __init__(self, offset, orientation="left", colour=(255, 255, 0)):
+        super().__init__(offset, colour=(255, 255, 0))
         self.image = pygame.image.load("Assets/Cone.png").convert()
         self.orient(offset, orientation)
         self.image = pygame.transform.scale2x(self.image)
@@ -213,7 +213,6 @@ class Cone(Enemy):
         # Change self.rect to be hitbox DELETE
         self.rect = self.surf.get_rect()
         self.offset = offset
-        self.speed = speed
         self.rect.move_ip(offset)
 
     def draw(self, screen):

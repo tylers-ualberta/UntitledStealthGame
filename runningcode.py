@@ -38,7 +38,30 @@ while running:
         screen.blit(entity.surf, entity.rect)
     for entity in all_sprites_img:
         screen.blit(entity.image, entity.rect)
+    for entity in cone_sprites:
+        screen.blit(entity.image, entity.rect[0])
+        for rect in entity.rect:
+            screen.blit(entity.surf, rect)
     pygame.display.flip()
+
+    # Vision cone collision
+    for cone in cone_sprites:
+        for rect in cone.rect:
+            if player.rect.colliderect(rect):
+                player.kill()
+                running = False
+
+    # Wall collision
+    if pygame.sprite.spritecollideany(player, wall_sprites):
+        col_wall = pygame.sprite.spritecollide(player, wall_sprites, False)[0]
+        if player.rect.top < col_wall.rect.bottom < player.rect.bottom:
+            player.rect.top = col_wall.rect.bottom
+        elif player.rect.left < col_wall.rect.right < player.rect.right:
+            player.rect.left = col_wall.rect.right
+        elif player.rect.bottom > col_wall.rect.top > player.rect.top:
+            player.rect.bottom = col_wall.rect.top
+        elif player.rect.right > col_wall.rect.left > player.rect.left:
+            player.rect.right = col_wall.rect.left
     # Sets our framerate
     clock.tick(60)
 pygame.quit()

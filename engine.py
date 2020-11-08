@@ -210,7 +210,7 @@ class Walls(pygame.sprite.Sprite):
 class Cone(Enemy):
     def __init__(self, offset, orientation="l", colour=(255, 255, 0)):
         super().__init__(offset, colour=(255, 0, 0))
-        self.image = pygame.image.load(r"Hackathon/Assets/Cone.png")
+        self.image = pygame.image.load("Assets/Cone.png")
         self.orient(offset, orientation)
         self.image = pygame.transform.scale2x(self.image)
         self.image.set_colorkey((255, 255, 255), RLEACCEL)

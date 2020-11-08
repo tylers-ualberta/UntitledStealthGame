@@ -26,9 +26,10 @@ SCREEN_HEIGHT = 600
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super(Player, self).__init__()
-        self.surf = pygame.Surface((75, 25))
-        self.surf.fill((0, 0, 0))
-        self.rect = self.surf.get_rect()
+        self.x = 0
+        self.y = 0
+        self.image = pygame.image.load('testpng.jpg')
+        self.rect = pygame.Rect(self.x, self.y, 32, 32)  # The rect for collision detection.
 
     # Move the sprite based on keypresses
     def update(self, pressed_keys):
@@ -57,6 +58,7 @@ class Player(pygame.sprite.Sprite):
 class Enemy(pygame.sprite.Sprite):
     def __init__(self):
         super(Enemy, self).__init__()
+        self.image = pygame.image.load('testpng.jpg')
         self.surf = pygame.Surface((20, 10))
         self.surf.fill((0, 0, 0))
         self.rect = self.surf.get_rect(
@@ -132,7 +134,7 @@ while running:
 
     # Draw all our sprites
     for entity in all_sprites:
-        screen.blit(entity.surf, entity.rect)
+        screen.blit(entity.image, entity.rect)
 
     # Check if any enemies have collided with the player
     if pygame.sprite.spritecollideany(player, enemies):

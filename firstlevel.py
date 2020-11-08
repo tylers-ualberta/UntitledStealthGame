@@ -2,11 +2,15 @@ import pygame
 from pygame.locals import *
 pygame.init()
 
-screen = pygame.display.set_mode([500, 500], RESIZABLE|HWSURFACE|DOUBLEBUF)
+screen = pygame.display.set_mode([1260, 700], RESIZABLE|HWSURFACE|DOUBLEBUF)
 
 running = True
+player_location = (screen.get_width()-50, screen.get_height()-50)
+offset = [50, 50]
 
 while running:
+
+
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -14,11 +18,26 @@ while running:
         if event.type == pygame.KEYDOWN:
             if event.key == K_ESCAPE:
                 running = False
+    keys = pygame.key.get_pressed()
+    if keys[K_w]:
+        offset[1] += 0.5
+        player_location = (screen.get_width()-offset[0], screen.get_height()-offset[1])
+    if keys[K_a]:
+        offset[0] += 0.5
+        player_location = (screen.get_width()-offset[0], screen.get_height()-offset[1])
+    if keys[K_s]:
+        offset[1] -= 0.5
+        player_location = (screen.get_width()-offset[0], screen.get_height()-offset[1])
+    if keys[K_d]:
+        offset[0] -= 0.5
+        player_location = (screen.get_width()-offset[0], screen.get_height()-offset[1])
         
         if event.type == pygame.VIDEORESIZE:
             # There's some code to add back window content here.
             surface = pygame.display.set_mode((event.w, event.h),
                                               RESIZABLE|HWSURFACE|DOUBLEBUF)
+            player_location = (screen.get_width()-offset[0], screen.get_height()-offset[1])
+            
 
     screen.fill((255, 255, 255))
 
@@ -28,7 +47,7 @@ while running:
     pygame.draw.rect(screen, (0, 0, 0), ((0, 0), (10, screen.get_height())))
     pygame.draw.rect(screen, (0, 0, 0), ((0, screen.get_height()-10), (screen.get_width(), 10)))
     pygame.draw.rect(screen, (0, 0, 0), ((screen.get_width()-10, 0), (10, screen.get_height())))
-    player = pygame.draw.circle(screen, (0, 0, 255), (screen.get_width()-50, screen.get_height()-50), 10)
+    player = pygame.draw.circle(screen, (0, 0, 255), player_location, 10)
 
     pygame.display.flip()
 

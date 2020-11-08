@@ -313,10 +313,6 @@ def run():
         clock.tick(30)
     return(end)
 
-<<<<<<< HEAD
-    
-=======
->>>>>>> 01d142f5de0985c6cfe266657c43a26313d718ef
 
 if __name__ == "__main__":
     run()

@@ -27,7 +27,7 @@ def run():
     # Initializing players and enemies
     player = Player(offset, sprite="Assets/Player.png")
     enemy = Enemy(e_spawn1, sprite="Assets/SecurityGuard.png")
-    cone = Cone(e_spawn1, orientation="d")
+    cone = Cone(e_spawn1, orientation="r")
 
     start_ticks = pygame.time.get_ticks() #starter tick
 
@@ -68,8 +68,7 @@ def run():
         # Calculates time
         time = (pygame.time.get_ticks() - start_ticks) / 1000 #calculate how many seconds
         # Change view cone
-        if time > 2:
-            cone_state += 1
+        if time > 1:
             start_ticks = pygame.time.get_ticks()
         
             if cone_state > 3:
@@ -86,7 +85,8 @@ def run():
             elif cone_state == 3:
                 cone.kill()
                 cone = Cone([3*screen.get_width()/4+20, screen.get_height()/2-10], orientation="r")
-       
+            cone_state += 1
+
         # Drawing
         screen.blit(player.image, player.rect)
         screen.blit(enemy.image, enemy.rect)

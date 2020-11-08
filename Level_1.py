@@ -50,6 +50,7 @@ def run():
     e_spawn4 = [730, 350]
     e_spawn5 = [400, 330]
     e_spawn6 = [605, 100]
+    e_spawn7 = [1000, 180]
     # Set goal location
     goal = [50, screen.get_height()/5+20]
 
@@ -59,13 +60,13 @@ def run():
     enemy2 = Enemy(e_spawn2, sprite="Assets/SecurityGuard.png")
     enemy3 = Enemy(e_spawn3, sprite="Assets/SecurityGuard.png")
     enemy4 = Enemy(e_spawn4, sprite="Assets/SecurityGuard.png")
-    enemy5 = MovingEnemy(e_spawn5, [(100, 330), (400, 330)], speed=5, sprite="Assets/SecurityGuard.png")
+    enemy5 = MovingEnemy(e_spawn5, [(100, 250), (520, 420)], speed=10, sprite="Assets/SecurityGuard.png")
     enemy6 = Enemy(e_spawn6, sprite="Assets/SecurityGuard.png")
+    enemy7 = MovingEnemy(e_spawn7, [(1000, 180), (200, 30)], speed=10, sprite="Assets/SecurityGuard.png")
     cone1 = Cone(e_spawn1, orientation="d")
     cone2 = Cone(e_spawn2, orientation="u")
     cone3 = Cone(e_spawn3, orientation="u")
     cone4 = Cone(e_spawn4, orientation="d")
-    cone5 = Cone(e_spawn5, orientation="l")
     cone6 = Cone(e_spawn6, orientation="l")
     endflag = Item(goal, sprite="Assets/EndFlag.png")
 
@@ -76,7 +77,6 @@ def run():
     cone2_state = 0
     cone3_state = 0
     cone4_state = 0
-    cone5_state = 0
     cone6_state = 0
 
     # Start clock for clock.tick
@@ -117,6 +117,8 @@ def run():
         enemies.add(enemy5)
         all_sprites_img.add(enemy6)
         enemies.add(enemy6)
+        all_sprites_img.add(enemy7)
+        enemies.add(enemy7)
         all_sprites_img.add(endflag)
         items.add(endflag)
         all_sprites_img.add(cone1)
@@ -127,8 +129,6 @@ def run():
         cone_sprites.add(cone3)
         all_sprites_img.add(cone4)
         cone_sprites.add(cone4)
-        all_sprites_img.add(cone5)
-        cone_sprites.add(cone5)
         all_sprites_img.add(cone6)
         cone_sprites.add(cone6)
 
@@ -153,6 +153,8 @@ def run():
         wall_sprites.add(wall9)
 
         player.update_position()
+        enemy5.update_position()
+        enemy7.update_position()
 
         # Calculates time
         time = (pygame.time.get_ticks() - start_ticks) / 1000 #calculate how many seconds
@@ -239,21 +241,6 @@ def run():
                 all_sprites_img.add(cone4)
                 cone_sprites.add(cone4)
             cone4_state += 1
-
-        # Enemy 5
-            if cone5_state > 1:
-                cone5_state = 0
-            if cone5_state == 0:
-                cone5.kill()
-                cone5 = Cone([400, 330], orientation="r")
-                all_sprites_img.add(cone5)
-                cone_sprites.add(cone5)
-            elif cone5_state == 1:
-                cone5.kill()
-                cone5 = Cone([400, 330], orientation="l")
-                all_sprites_img.add(cone5)
-                cone_sprites.add(cone5)
-            cone5_state += 1
 
         # Enemy 6
             if cone6_state > 3:

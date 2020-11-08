@@ -25,14 +25,12 @@ def run():
     e_spawn1 = [3*screen.get_width()/4+20, screen.get_height()/2-10]
 
     # Initializing players and enemies
-    player = Player(offset)
-    enemy = Enemy(e_spawn1)
-    cone = Cone(e_spawn1)
+    player = Player(offset, sprite="Assets/Player.png")
+    enemy = Enemy(e_spawn1, sprite="Assets/SecurityGuard.png")
+    cone = Cone(e_spawn1, orientation="r")
 
     clock = pygame.time.Clock()
     while running:
-
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -58,32 +56,21 @@ def run():
         wall3 = Walls([0, screen.get_height()-100], screen.get_width(), 100)
         wall4 = Walls([0, screen.get_height()/2-100], 3*screen.get_width()/4, 200)
 
-        # pygame.draw.rect(screen, (0, 0, 0), ((0, 10), (screen.get_width(), 100)))
-        # pygame.draw.rect(screen, (0, 0, 0), ((screen.get_width()-100, 0), (100, screen.get_height())))
-        # pygame.draw.rect(screen, (0, 0, 0), ((0, screen.get_height()-100), (screen.get_width(), 100)))
-        # pygame.draw.rect(screen, (0, 0, 0), ((0, screen.get_height()/2-100), (3*screen.get_width()/4, 200)))
-
         player.update_position()
 
         # Drawing
-        screen.blit(player.surf, player.rect)
-        screen.blit(enemy.surf, enemy.rect)
+        screen.blit(player.image, player.rect)
+        screen.blit(enemy.image, enemy.rect)
         screen.blit(cone.image, cone.rect)
-        # wallB1.draw()
+
+        # Walls
         screen.blit(wallB1.surf, wallB1.rect)
-        # wallB2.draw()
         screen.blit(wallB2.surf, wallB2.rect)
-        # wallB3.draw()
         screen.blit(wallB3.surf, wallB3.rect)
-        # wallB4.draw()
         screen.blit(wallB4.surf, wallB4.rect)
-        # wall1.draw()
         screen.blit(wall1.surf, wall1.rect)
-        # wall2.draw()
         screen.blit(wall2.surf, wall2.rect)
-        # wall3.draw()
         screen.blit(wall3.surf, wall3.rect)
-        # wall4.draw()
         screen.blit(wall4.surf, wall4.rect)
 
         # Keep at bottom for display reasons

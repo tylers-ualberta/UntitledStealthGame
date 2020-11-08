@@ -9,10 +9,10 @@ HackED Beta 2020, Team STACed Beta Submission
 
 This game is a very simple stealth game, in which the player must avoid
 detection from 'security guards' and make it to the end flags to get to
-the next level. 
+the next level.
 
 Running Instructions:
-All the code should be run through the TitleScreen.py file, which calls
+All the code should be run through the UntitledStealthGame.py file, which calls
 everything else. The directory of TitleScreen.py must also contain
 engine.py, all the level python files, and the Assets folder. 
 

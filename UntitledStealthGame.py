@@ -27,6 +27,9 @@ StartRect.center = (630, 500)
 BackRect.center = (630,200)
 #Decor1 = pygame.image.load('Assets/PlayerWalking.png')
 
+pygame.mixer.init()
+pygame.mixer.music.load("Assets/widePutinSong.mp3")
+pygame.mixer.music.play()
 
 
 while Opening:

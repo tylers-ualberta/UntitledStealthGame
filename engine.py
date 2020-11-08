@@ -136,13 +136,21 @@ class Cone(Enemy):
 
     def orient(self, offset, orientation):
         # Adjust offset to be centered on enemy
-        if orientation == "left":
+        if orientation == "l":
             offset[0] -= 160
             offset[1] -= 40
-        elif orientation == "right":
-            offset[0] += 20 # Actual width of enemy
-            offset[1] -= 40 # Twice the size
+        elif orientation == "r":
+            offset[0] += 23
+            offset[1] -= 40
             self.image = pygame.transform.rotate(self.image, 180)
+        elif orientation == "d":
+            offset[0] -= 38
+            offset[1] += 40
+            self.image = pygame.transform.rotate(self.image, 90)
+        elif orientation == "u":
+            offset[0] -= 38
+            offset[1] -= 160
+            self.image = pygame.transform.rotate(self.image, 270)
 
 def main():
     width, height = 1260, 700

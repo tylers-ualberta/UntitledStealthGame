@@ -1,7 +1,7 @@
 import pygame
 import engine
 from pygame.locals import *
-pygame.init()
+
 """ Provide the necessary info for the main game to be able to generate the
 level.
 
@@ -15,14 +15,10 @@ Bottom right is 1260 x 700
 # offset indicates player spawn point
 offset = [50, 50]
 
-class walls():
 
-    pass
-
-
-
-def main():
-    player = engine.player(offset)
+def run():
+    pygame.init()
+    player = engine.Player(offset)
     screen = pygame.display.set_mode([1260, 700], RESIZABLE|HWSURFACE|DOUBLEBUF)
     running = True
 
@@ -42,10 +38,18 @@ def main():
                                                   RESIZABLE|HWSURFACE|DOUBLEBUF)
                 player.resize()
         screen.fill((255, 255, 255))
+
+        # Boundary rectangles
         pygame.draw.rect(screen, (0, 0, 0), ((0, 0), (screen.get_width(), 10)))
         pygame.draw.rect(screen, (0, 0, 0), ((0, 0), (10, screen.get_height())))
         pygame.draw.rect(screen, (0, 0, 0), ((0, screen.get_height()-10), (screen.get_width(), 10)))
         pygame.draw.rect(screen, (0, 0, 0), ((screen.get_width()-10, 0), (10, screen.get_height())))
+
+        # Walls
+        # pygame.draw.rect(screen, colour, (top-left, (width,height))
+        # pygame.draw.rect(screen, (0, 255, 0), ((0, 10), (screen.get_width(), 10)))
+
+
         player.update_position()
         player.draw()
         pygame.display.flip()
@@ -54,4 +58,7 @@ def main():
         clock.tick(60)
         pass
 
-pygame.quit()
+    pygame.quit()
+
+if __name__ == "__main__":
+    run()

@@ -14,7 +14,7 @@ Description: Intro to timing.
 pygame.init()
 # Main function that runs
 def run():
-
+    end = False
     screen = pygame.display.set_mode([1260, 700], RESIZABLE|HWSURFACE|DOUBLEBUF)
     running = True
 

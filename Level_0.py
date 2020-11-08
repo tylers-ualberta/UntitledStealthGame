@@ -12,10 +12,10 @@ Description: Tutorial level
 """
 
 pygame.init()
-end = False
+
 # Main function that runs
 def run():
-
+    end = False
     screen = pygame.display.set_mode([1260, 700], HWSURFACE|DOUBLEBUF)
     running = True
 

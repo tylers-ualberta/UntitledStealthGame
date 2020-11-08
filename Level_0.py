@@ -11,9 +11,9 @@ Description: Tutorial level
 
 """
 
+pygame.init()
 # Main function that runs
 def run():
-    pygame.init()
 
     screen = pygame.display.set_mode([1260, 700], RESIZABLE|HWSURFACE|DOUBLEBUF)
     running = True
@@ -27,9 +27,16 @@ def run():
     # Initializing players and enemies
     player = Player(offset, sprite="Assets/Player.png")
     enemy = Enemy(e_spawn1, sprite="Assets/SecurityGuard.png")
-    cone = Cone(e_spawn1, orientation="r")
+    cone = Cone(e_spawn1, orientation="d")
 
+    start_ticks = pygame.time.get_ticks() #starter tick
+
+    # Initialize Cone State
+    cone_state = 0
+
+    # Start clock for clock.tick
     clock = pygame.time.Clock()
+
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -58,6 +65,28 @@ def run():
 
         player.update_position()
 
+        # Calculates time
+        time = (pygame.time.get_ticks() - start_ticks) / 1000 #calculate how many seconds
+        # Change view cone
+        if time > 1:
+            cone_state += 1
+            start_ticks = pygame.time.get_ticks()
+        
+            if cone_state > 3:
+                cone_state = 0
+            if cone_state == 0:
+                cone.kill()
+                cone = Cone([3*screen.get_width()/4+20, screen.get_height()/2-10], orientation="d")
+            elif cone_state == 1:
+                cone.kill()
+                cone = Cone([3*screen.get_width()/4+20, screen.get_height()/2-10], orientation="r")
+            elif cone_state == 2:
+                cone.kill()
+                cone = Cone([3*screen.get_width()/4+20, screen.get_height()/2-10], orientation="u")
+            elif cone_state == 3:
+                cone.kill()
+                cone = Cone([3*screen.get_width()/4+20, screen.get_height()/2-10], orientation="r")
+       
         # Drawing
         screen.blit(player.image, player.rect)
         screen.blit(enemy.image, enemy.rect)
@@ -72,10 +101,11 @@ def run():
         screen.blit(wall2.surf, wall2.rect)
         screen.blit(wall3.surf, wall3.rect)
         screen.blit(wall4.surf, wall4.rect)
-
+        
         # Keep at bottom for display reasons
         pygame.display.flip()
-        # Sets our framerate
+        
+        # Initialize frame rate
         clock.tick(60)
         pass
 

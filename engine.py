@@ -42,10 +42,23 @@ class Player(pygame.sprite.Sprite):
         return
 
 
-class Enemy(Characters):
-    def __init__(self, offset):
+class Enemy(pygame.sprite.Sprite):
+    def __init__(self, offset, speed=0, colour=(255, 255, 0)):
+        super(Enemy, self).__init__()
+        self.surf = pygame.Surface((20,20))
+        self.surf.fill(colour)
+        self.rect = self.surf.get_rect()
         self.offset = offset
-        self.location = (screen.get_width()-self.offset[0], screen.get_height()-self.offset[0])
+        self.speed = speed
+        self.rect.move_ip(offset)
+
+    def resize(self, dWidth, dHeight):
+        self.rect.move_ip(-dWidth, -dHeight)
+        return
+
+    def draw(self):
+        screen.blit(self.surf, self.rect)
+        pass
 
 
 class Item(Characters):
@@ -60,6 +73,7 @@ class Walls():
 
 def main():
     player = Player([1210, 650])
+    enemy = Enemy([200, 234])
     # INCLUDE IN YOUR LEVEL:
     width, height = 1260, 700
     screen = pygame.display.set_mode([width, height], RESIZABLE|HWSURFACE|DOUBLEBUF)
@@ -81,6 +95,7 @@ def main():
                 # Keeps the player's position constant
                 dw, dh = width - event.w, height - event.h
                 player.resize(dw, dh)
+                enemy.resize(dw, dh)
                 width, height = event.w, event.h
                 
         # Sets screen colour
@@ -93,6 +108,7 @@ def main():
         # Updates player's position each loop
         player.update_position()
         player.draw()
+        enemy.draw()
         pygame.display.flip()
         # Sets our framerate
         clock.tick(60)

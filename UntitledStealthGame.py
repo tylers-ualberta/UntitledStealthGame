@@ -2,7 +2,6 @@ import pygame
 import sys
 import Level_0
 import Level_1
-import Death
 
 from pygame.locals import *
 pygame.init()

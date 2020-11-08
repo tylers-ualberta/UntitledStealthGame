@@ -1,5 +1,5 @@
 import pygame
-import engine
+from engine import *
 from pygame.locals import *
 
 """ Provide the necessary info for the main game to be able to generate the
@@ -25,8 +25,9 @@ def run():
     e_spawn1 = [3*screen.get_width()/4+20, screen.get_height()/2-10]
 
     # Initializing players and enemies
-    player = engine.Player(offset)
-    enemy = engine.Enemy(e_spawn1)
+    player = Player(offset)
+    enemy = Enemy(e_spawn1)
+    cone = Cone(e_spawn1)
 
     clock = pygame.time.Clock()
     while running:
@@ -46,23 +47,44 @@ def run():
         screen.fill((255, 255, 255))
 
         # Boundary rectangles
-        pygame.draw.rect(screen, (0, 0, 0), ((0, 0), (screen.get_width(), 10)))
-        pygame.draw.rect(screen, (0, 0, 0), ((0, 0), (10, screen.get_height())))
-        pygame.draw.rect(screen, (0, 0, 0), ((0, screen.get_height()-10), (screen.get_width(), 10)))
-        pygame.draw.rect(screen, (0, 0, 0), ((screen.get_width()-10, 0), (10, screen.get_height())))
+        wallB1 = Walls([0, 0], screen.get_width(), 10)
+        wallB2 = Walls([0, 0], 10, screen.get_height())
+        wallB3 = Walls([0, screen.get_height()-10], screen.get_width(), 10)
+        wallB4 = Walls([screen.get_width()-10, 0], 10, screen.get_height())
 
-        # Walls
-        # pygame.draw.rect(screen, colour, (top-left, (width,height))
-        pygame.draw.rect(screen, (0, 0, 0), ((0, 10), (screen.get_width(), 100)))
-        pygame.draw.rect(screen, (0, 0, 0), ((screen.get_width()-100, 0), (100, screen.get_height())))
-        pygame.draw.rect(screen, (0, 0, 0), ((0, screen.get_height()-100), (screen.get_width(), 100)))
-        pygame.draw.rect(screen, (0, 0, 0), ((0, screen.get_height()/2-100), (3*screen.get_width()/4, 200)))
+        # Walls(corner(list), width, height, colour=(0,0,0))
+        wall1 = Walls([0, 10], screen.get_width(), 100)
+        wall2 = Walls([screen.get_width() - 100, 0], 100, screen.get_height())
+        wall3 = Walls([0, screen.get_height()-100], screen.get_width(), 100)
+        wall4 = Walls([0, screen.get_height()/2-100], 3*screen.get_width()/4, 200)
+
+        # pygame.draw.rect(screen, (0, 0, 0), ((0, 10), (screen.get_width(), 100)))
+        # pygame.draw.rect(screen, (0, 0, 0), ((screen.get_width()-100, 0), (100, screen.get_height())))
+        # pygame.draw.rect(screen, (0, 0, 0), ((0, screen.get_height()-100), (screen.get_width(), 100)))
+        # pygame.draw.rect(screen, (0, 0, 0), ((0, screen.get_height()/2-100), (3*screen.get_width()/4, 200)))
 
         player.update_position()
-        # DELETE, replace with player.image, keep in classes
+
+        # Drawing
         screen.blit(player.surf, player.rect)
-        # DELETE, replace with enemy.image, keep in classes
         screen.blit(enemy.surf, enemy.rect)
+        screen.blit(cone.image, cone.rect)
+        # wallB1.draw()
+        screen.blit(wallB1.surf, wallB1.rect)
+        # wallB2.draw()
+        screen.blit(wallB2.surf, wallB2.rect)
+        # wallB3.draw()
+        screen.blit(wallB3.surf, wallB3.rect)
+        # wallB4.draw()
+        screen.blit(wallB4.surf, wallB4.rect)
+        # wall1.draw()
+        screen.blit(wall1.surf, wall1.rect)
+        # wall2.draw()
+        screen.blit(wall2.surf, wall2.rect)
+        # wall3.draw()
+        screen.blit(wall3.surf, wall3.rect)
+        # wall4.draw()
+        screen.blit(wall4.surf, wall4.rect)
 
         # Keep at bottom for display reasons
         pygame.display.flip()

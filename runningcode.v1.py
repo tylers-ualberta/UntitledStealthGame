@@ -1,6 +1,12 @@
-# INCLUDE IN YOUR LEVEL:
-width, height = 1260, 700
-screen = pygame.display.set_mode([width, height], RESIZABLE|HWSURFACE|DOUBLEBUF)
+# Please include the following code in every level file.
+import pygame
+from pygame.locals import *
+from engine import *  # Allows you to call engine classes without the engine.class notation
+pygame.init()
+
+# Set your offset variable above this, remeber it is from the bottom right.
+player = Player(offset)
+screen = pygame.display.set_mode([1260, 700], RESIZABLE|HWSURFACE|DOUBLEBUF)
 running = True
 clock = pygame.time.Clock()
 while running:
@@ -16,11 +22,7 @@ while running:
             # There's some code to add back window content here.
             surface = pygame.display.set_mode((event.w, event.h),
                                             RESIZABLE|HWSURFACE|DOUBLEBUF)
-            # Keeps the player's position constant
-            dw, dh = width - event.w, height - event.h
-            player.resize(dw, dh)
-            width, height = event.w, event.h
-            
+            player.resize()
     # Sets screen colour
     screen.fill((255, 255, 255))
     # Draws boarder walls
@@ -32,6 +34,6 @@ while running:
     player.update_position()
     player.draw()
     pygame.display.flip()
+
     # Sets our framerate
     clock.tick(60)
-pygame.quit()

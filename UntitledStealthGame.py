@@ -78,9 +78,47 @@ while Instructions:
     pygame.display.flip()
 
 
-
+cont1 = False
 cont = Level_0.run()
 if cont:
-    Level_1.run()
+    cont1 = Level_1.run()
+if cont1:
+    screen = pygame.display.set_mode([1260, 700], HWSURFACE|DOUBLEBUF)
+    Win = True
+    WinFont = pygame.font.Font('freesansbold.ttf', 42)
+    WinWords = WinFont.render('You Won!', True, (0,225,0), (225,225,225))
+    WinRect = WinWords.get_rect()
+    WinRect.center = (630,350)
+    while Win:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == K_SPACE:
+                    Win = False
+        screen.blit(WinWords, WinRect)
+        pygame.display.flip()
+else:
+    screen = pygame.display.set_mode([1260, 700], HWSURFACE|DOUBLEBUF)
+    Dead = True
+    DeadFont = pygame.font.Font('freesansbold.ttf', 42)
+    DeadWords = DeadFont.render('Game Over', True, (225,0,0), black)
+    DeadRect = DeadWords.get_rect()
+    DeadRect.center = (630,350)
+
+    while Dead:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == K_SPACE:
+                    Dead = False
+        screen.fill(black)
+        screen.blit(DeadWords, DeadRect)
+        pygame.display.flip()
+
+
+        
+
 pygame.quit()
 
